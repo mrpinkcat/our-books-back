@@ -23,13 +23,15 @@ const schema = new Schema({
   },
   pages: {
     type: Number,
+    min: 1,
   },
   numberOfBooks: {
     type: Number,
     min: 1,
   },
-  borrowUserId: {
-    type: Types.ObjectId,
+  borrowUsernames: {
+    type: [String],
+    default: [],
   },
 });
 

@@ -1,6 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
+import { needAdminRank, needAuth } from './utils';
 import routes from './routes';
 import config from './env';
 
@@ -15,6 +16,12 @@ app.post('/auth', routes.auth);
 
 // Route d'enregistrement
 app.post('/register', routes.register);
+
+// Route pour ajouter un livre
+app.post('/addbook', needAdminRank, routes.addBook);
+
+// Route pour chercher un livre
+// app.get('/book', needAuth, routes.search);
 
 console.log('Connection to mongodb...')
 mongoose.connect(config.mongo.uri, { useNewUrlParser: true })

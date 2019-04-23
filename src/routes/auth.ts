@@ -5,7 +5,7 @@ import bcrypt from 'bcrypt';
 const User = models.User;
 
 export default (req: Request, res: Response) => {
-  console.log('Auth')
+  console.log(`Auth: ${req.body.username}`);
   if (req.body.username && req.body.password) {
     User.findOne({ username: req.body.username }).then((doc) => {
       if (doc) {
