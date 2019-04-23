@@ -1,7 +1,7 @@
-import { auth } from './auth';
+import auth from './auth';
+import register from './register';
 
-const routes = {
+export default {
   auth,
+  register,
 }
-
-export default routes;
