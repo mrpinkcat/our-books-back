@@ -19,7 +19,8 @@ export default (req: Request, res: Response) => {
             });
           } else {
             res.status(401).send({
-              error: 'Incorrect password'
+              error: 'Incorrect password',
+              type: 'password',
             })
           }
         })
@@ -29,6 +30,7 @@ export default (req: Request, res: Response) => {
       } else {
         res.status(403).send({
           error: 'Incorrect username',
+          type: 'username',
         });
       }
     })

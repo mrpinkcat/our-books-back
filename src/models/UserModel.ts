@@ -26,9 +26,14 @@ const schema = new Schema({
   },
   token: {
     type: String,
-    required: false,
+    required: true,
     unique: true,
   },
+  rank: {
+    type: String,
+    required: false,
+    default: 'user',
+  }
 });
 
 export default model('User', schema);
