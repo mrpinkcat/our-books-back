@@ -21,9 +21,9 @@ app.post('/register', routes.register);
 app.post('/addbook', needAdminRank, routes.addBook);
 
 // Route pour chercher un livre
-// app.get('/book', needAuth, routes.search);
+app.get('/books', needAuth, routes.searchBook);
 
-console.log('Connection to mongodb...')
+console.log('Connection to mongodb...');
 mongoose.connect(config.mongo.uri, { useNewUrlParser: true })
 .then(() => {
   console.log('Connected to mongodb.');

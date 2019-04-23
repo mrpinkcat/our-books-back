@@ -18,7 +18,7 @@ const schema = new Schema({
     required: false,
   },
   isbn: {
-    type: Number,
+    type: String,
     unique: true,
   },
   pages: {
@@ -34,5 +34,8 @@ const schema = new Schema({
     default: [],
   },
 });
+
+// db.books.createIndex( { name: "text" }, { default_language: "french" } )
+// Création de l'index pour la recherche de titre
 
 export default model('Book', schema);
