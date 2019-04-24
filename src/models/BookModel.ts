@@ -1,4 +1,5 @@
 import { model, Schema, Types } from 'mongoose';
+import { ObjectID } from 'bson';
 
 const schema = new Schema({
   name: {
@@ -19,20 +20,18 @@ const schema = new Schema({
   },
   isbn: {
     type: String,
-    unique: true,
   },
   pages: {
     type: Number,
     min: 1,
   },
-  numberOfBooks: {
-    type: Number,
-    min: 1,
-  },
   borrowUsernames: {
-    type: [String],
-    default: [],
+    type: String,
+    required: false,
   },
+  libraryId: {
+    type: ObjectID,
+  }
 });
 
 // db.books.createIndex( { name: "text" }, { default_language: "french" } )
