@@ -3,6 +3,7 @@ node_js:
   - "11.14.0"
 before_script: 
   - "yarn global add typescript"
+  - "tsc"
 deploy:
   provider: heroku
   api_key:
