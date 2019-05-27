@@ -28,7 +28,8 @@
   },
   "scripts": {
     "start": "node dist",
-    "test": "yarn"
+    "test": "tsc",
+    "build": "tsc"
   },
   "engines": {
     "node": "11.14.0"
