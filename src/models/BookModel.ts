@@ -1,4 +1,4 @@
-import { model, Schema, Types } from 'mongoose';
+import { model, Schema } from 'mongoose';
 import { ObjectID } from 'bson';
 
 const schema = new Schema({
@@ -25,7 +25,7 @@ const schema = new Schema({
     type: Number,
     min: 1,
   },
-  borrowUsernames: {
+  borrowUsername: {
     type: String,
     required: false,
   },

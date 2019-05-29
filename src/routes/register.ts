@@ -46,7 +46,7 @@ export default (req: Request, res: Response) => {
             });
           } else {
             res.status(401).send({
-              error: 'You arent admin ! GET OUT !',
+              error: 'You aren\'t admin ! GET OUT !',
             });
           }
         })
@@ -90,7 +90,7 @@ export default (req: Request, res: Response) => {
     }
   } else {
     res.status(400).send({
-      error: 'Body must contain username, password, firstName, lastName and birthDate in a timestamp format',
+      error: 'Body must contain username, password, firstName, lastName and birthDate in a string timestamp format',
     });
   }
 }
