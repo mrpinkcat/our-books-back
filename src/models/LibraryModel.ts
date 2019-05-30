@@ -16,7 +16,16 @@ const schema = new Schema({
     required: true,
   },
   zipCode: {
-    code: Number,
+    type: Number,
+    required: true,
+  },
+  country: {
+    type: String,
+    required: true,
+  },
+  state: {
+    type: String,
+    required: false,
   },
 });
 

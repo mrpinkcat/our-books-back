@@ -23,6 +23,9 @@ app.post('/books/:isbn', needAdminRank, routes.addBook);
 // Route pour chercher un livre
 app.get('/books', needAuth, routes.searchBook);
 
+// Route pour ajouter une bibiliothèque
+app.post('/librarys', needAdminRank, routes.addLibrary);
+
 console.log('Connection to mongodb...');
 mongoose.connect(config.mongo.uri, { useNewUrlParser: true, useCreateIndex: true })
 .then(() => {
