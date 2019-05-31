@@ -3,6 +3,7 @@ import register from './register';
 import addBook from './addBook';
 import searchBook from './searchBook';
 import addLibrary from './addLibrary';
+import searchLibrary from './searchLibrary';
 
 export default {
   auth,
@@ -10,4 +11,5 @@ export default {
   addBook,
   searchBook,
   addLibrary,
+  searchLibrary,
 }
