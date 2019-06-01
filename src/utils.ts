@@ -85,27 +85,49 @@ export const needAuth = (req: Request, res: Response, next: NextFunction) => {
 }
 
 /**
- * Get information about a book by isbn (openlibrary.org)
+ * Get information about a book by isbn (google.com/books)
  * @param isbn Book ISBN
  */
-export const getBookInfo = (isbn: string): Promise<{ name: string, author: string, publisher: string, publicationDate: number, coverUrl: string, pages: number }> => {
+export const getBookInfo = (isbn: string): Promise<{ name: string, authors: string[], publisher: string, publicationDate: Date, coverUrl: string, pages: number, description: string }> => {
   return new Promise((resolve, reject) => {
-    axios.get(`http://openlibrary.org/isbn/${isbn}.json`)
+    axios.get(`https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}`)
     .then((apiRes) => {
-      let publicationDate;
-      if (apiRes.data.publish_date.length === 4) {
-        publicationDate = (apiRes.data.publish_date - 1970)*31536000;
+      if (apiRes.data.totalItems === 1) {
+        const bookInfo: { 
+          id: string,
+          volumeInfo: {
+            title: string,
+            authors: string[],
+            publishedDate: string,
+            publisher: string,
+            description: string,
+            industryIdentifiers: {
+              type: string,
+              identifier: string,
+            }[],
+            pageCount: number,
+            maturityRating: string,
+            language: string,
+            imageLinks: {
+              smallThumbnail: string,
+              thumbnail: string,
+            },
+          },
+        } = apiRes.data.items[0];
+        resolve({
+          name: bookInfo.volumeInfo.title,
+          authors: bookInfo.volumeInfo.authors,
+          publisher: bookInfo.volumeInfo.publisher,
+          publicationDate: new Date(bookInfo.volumeInfo.publishedDate),
+          coverUrl: `https://books.google.com/books/content/images/frontcover/${bookInfo.id}?fife=h600`,
+          pages: bookInfo.volumeInfo.pageCount,
+          description: bookInfo.volumeInfo.description,
+        });
       } else {
-        publicationDate = moment(apiRes.data.publish_date).unix();
+        reject({
+          error: `Book with ISBN ${isbn} not found`,
+        });
       }
-      resolve({
-        name: apiRes.data.title,
-        author: apiRes.data.authors[0].key,
-        publisher: apiRes.data.publishers[0],
-        publicationDate: publicationDate,
-        coverUrl: `https://covers.openlibrary.org/b/id/${apiRes.data.covers[0]}.jpg`,
-        pages: apiRes.data.number_of_pages,
-      })
     })
     .catch((err) => {
       // console.log('err.response');

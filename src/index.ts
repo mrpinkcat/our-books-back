@@ -23,6 +23,9 @@ app.post('/books/:isbn', needAdminRank, routes.addBook);
 // Route pour chercher un livre
 app.get('/books', needAuth, routes.searchBook);
 
+// Route pour chercher un livre
+app.delete('/books/:isbn', needAdminRank, routes.deleteBook);
+
 // Route pour ajouter une bibiliothèque
 app.post('/libraries', needAdminRank, routes.addLibrary);
 
@@ -31,6 +34,8 @@ app.get('/libraries', needAuth, routes.searchLibrary);
 
 // Route pour emprunter un livre
 app.post('/borrow', needAuth, routes.borrow);
+
+// IDEA : /ask/:isbn # For ask to add a book
 
 console.log('Connection to mongodb...');
 mongoose.connect(config.mongo.uri, { useNewUrlParser: true, useCreateIndex: true })

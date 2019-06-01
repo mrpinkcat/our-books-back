@@ -5,6 +5,7 @@ import searchBook from './searchBook';
 import addLibrary from './addLibrary';
 import searchLibrary from './searchLibrary';
 import borrow from './borrow';
+import deleteBook from './deleteBook';
 
 export default {
   auth,
@@ -14,4 +15,5 @@ export default {
   addLibrary,
   searchLibrary,
   borrow,
+  deleteBook,
 }

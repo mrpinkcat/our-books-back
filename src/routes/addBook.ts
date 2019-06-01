@@ -20,15 +20,15 @@ export default (req: Request, res: Response) => {
 
         console.log(`${req.body.numberOfBooks} books ISBN:${req.params.isbn} in ${req.body.librariesIds}`);
   
-        let books: { name: string, author: string, publisher: string, publicationDate: Date, coverUrl: string, isbn: string, pages: number, borrowUsernames: undefined, libraryId: string}[] = [];
+        let books: { name: string, authors: string[], publisher: string, publicationDate: Date, coverUrl: string, isbn: string, pages: number, borrowUsernames: undefined, libraryId: string}[] = [];
 
-        let bookInfo: {name: string, author: string, publisher: string, publicationDate: number, coverUrl: string, isbn: string, pages: number };
+        let bookInfo: {name: string, authors: string[], publisher: string, publicationDate: Date, coverUrl: string, isbn: string, pages: number };
 
         getBookInfo(req.params.isbn)
         .then((book) => {
           bookInfo = {
             name: book.name,
-            author: book.author,
+            authors: book.authors,
             publisher: book.publisher,
             publicationDate: book.publicationDate,
             coverUrl: book.coverUrl,
@@ -39,9 +39,9 @@ export default (req: Request, res: Response) => {
           body.librariesIds.forEach((libraryId, index) => {
             books.push({
               name: bookInfo.name,
-              author: bookInfo.author,
+              authors: bookInfo.authors,
               publisher: bookInfo.publisher,
-              publicationDate: new Date(bookInfo.publicationDate),
+              publicationDate: bookInfo.publicationDate,
               coverUrl: bookInfo.coverUrl,
               isbn: bookInfo.isbn,
               pages: bookInfo.pages,
