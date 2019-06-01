@@ -29,12 +29,15 @@ app.post('/libraries', needAdminRank, routes.addLibrary);
 // Route pour chercher une bibiliothèque
 app.get('/libraries', needAuth, routes.searchLibrary);
 
+// Route pour emprunter un livre
+app.post('/borrow', needAuth, routes.borrow);
+
 console.log('Connection to mongodb...');
 mongoose.connect(config.mongo.uri, { useNewUrlParser: true, useCreateIndex: true })
 .then(() => {
   console.log('Connected to mongodb.');
-  app.listen(3000, () => {
-    console.log('App started on :3000');
+  app.listen(process.env.PORT, () => {
+    console.log(`App started on :${process.env.PORT}`);
   });
 })
 .catch((err) => {
