@@ -12,13 +12,11 @@ const schema = new Schema({
     type: String,
     required: true,
   },
-  firstName: {
+  fullName: {
     type: String,
     required: true,
-  },
-  lastName: {
-    type: String,
-    required: true,
+    minlength: 3,
+    maxlength: 100,
   },
   birthDate: {
     type: Date,

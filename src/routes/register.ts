@@ -10,7 +10,7 @@ const User = models.User;
 
 export default (req: Request, res: Response) => {
   console.log(req.body);
-  if (req.body.username && req.body.password && req.body.firstName && req.body.lastName && req.body.birthDate) {
+  if (req.body.username && req.body.password && req.body.fullName && req.body.birthDate) {
     // Si la requete contient le rank admin
     if (req.body.rank === 'admin') {
       if (req.query.token) {
@@ -23,8 +23,7 @@ export default (req: Request, res: Response) => {
               const user = new User({
                 username: req.body.username,
                 password: hashedPassword,
-                firstName: req.body.firstName,
-                lastName: req.body.lastName,
+                fullName: req.body.fullName,
                 birthDate: new Date(parseInt(req.body.birthDate)),
                 rank: req.body.rank,
                 token,
@@ -67,8 +66,7 @@ export default (req: Request, res: Response) => {
         const user = new User({
           username: req.body.username,
           password: hashedPassword,
-          firstName: req.body.firstName,
-          lastName: req.body.lastName,
+          fullName: req.body.fullName,
           birthDate: new Date(parseInt(req.body.birthDate)),
           token,
         });
@@ -90,7 +88,7 @@ export default (req: Request, res: Response) => {
     }
   } else {
     res.status(400).send({
-      error: 'Body must contain username, password, firstName, lastName and birthDate in a string timestamp format',
+      error: 'Body must contain username, password, fullName and birthDate in a string timestamp format',
     });
   }
 }
