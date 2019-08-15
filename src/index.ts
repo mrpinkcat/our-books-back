@@ -14,6 +14,9 @@ app.get('/heartbeat', (req, res) => { res.sendStatus(200) });
 // Route d'authentification - Utilisé pour l'obtention de token
 app.post('/auth', routes.auth);
 
+// Route d'authentification - Utilisé pour l'obtention de token
+app.get('/auth/:token', routes.checkAuth);
+
 // Route d'enregistrement
 app.post('/register', routes.register);
 
