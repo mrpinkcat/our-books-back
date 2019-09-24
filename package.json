@@ -31,8 +31,5 @@
     "start": "node dist",
     "test": "tsc",
     "build": "tsc"
-  },
-  "engines": {
-    "node": "11.14.0"
   }
 }
