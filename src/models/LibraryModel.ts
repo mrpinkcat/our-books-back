@@ -27,6 +27,14 @@ const schema = new Schema({
     type: String,
     required: false,
   },
+  latitude: {
+    type: Number,
+    required: true,
+  },
+  longitude: {
+    type: Number,
+    required: true,
+  }
 });
 
 export default model('Library', schema);

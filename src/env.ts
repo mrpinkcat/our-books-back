@@ -11,6 +11,7 @@ const envSchema = joi.object({
   MONGO_PORT: joi.number().integer().default(27017),
   MONGO_DATABASE: joi.string().required(),
   BCRYPT_SALTROUNDS: joi.number().positive().integer().default(10),
+  GEO_API_KEY: joi.string().required(),
 }).unknown().required();
 
 const { error, value: vars } = joi.validate(process.env, envSchema);
@@ -32,4 +33,5 @@ export default {
   bcrypt: {
     saltRounds: vars.BCRYPT_SALTROUNDS as string,
   },
+  geocode: vars.GEO_API_KEY as string,
 }
