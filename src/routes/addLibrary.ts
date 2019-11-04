@@ -44,6 +44,11 @@ export default (req: Request, res: Response) => {
         res.status(500).send(err);
       });
     })
+    .catch((gErr) => {
+      res.status(500).send({
+        error: 'Error Google GeoCode API',
+      });
+    })
 
   } else {
     res.status(400).send({
