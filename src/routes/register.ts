@@ -70,6 +70,7 @@ export default (req: Request, res: Response) => {
           fullName: req.body.fullName,
           birthDate: new Date(parseInt(req.body.birthDate)),
           token,
+          libraryId: req.body.libraryId,
         });
         user.save()
         .then((doc) => {
