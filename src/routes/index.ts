@@ -3,10 +3,12 @@ import register from './register';
 import addBook from './addBook';
 import searchBook from './searchBook';
 import addLibrary from './addLibrary';
-import searchLibrary from './searchLibrary';
+import library from './library';
 import borrow from './borrow';
 import deleteBook from './deleteBook';
 import checkAuth from './checkAuth';
+import searchCategorie from './searchCategories';
+import changeUserLibrary from './changeUserLibrary';
 
 export default {
   auth,
@@ -14,8 +16,10 @@ export default {
   addBook,
   searchBook,
   addLibrary,
-  searchLibrary,
+  library,
   borrow,
   deleteBook,
   checkAuth,
+  searchCategorie,
+  changeUserLibrary,
 }

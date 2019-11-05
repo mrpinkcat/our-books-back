@@ -5,8 +5,8 @@ const schema = new Schema({
   name: {
     type: String,
   },
-  authors: {
-    type: [String],
+  author: {
+    type: String,
   },
   publisher: {
     type: String,

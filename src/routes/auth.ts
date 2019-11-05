@@ -9,18 +9,22 @@ export default (req: Request, res: Response) => {
   if (req.body.username && req.body.password) {
     User.findOne({ username: req.body.username }).then((doc) => {
       if (doc) {
+        const resDoc = (doc.toJSON() as { rank: string, _id: string, username: string, password: string, fullName: string, birthDate: string, token: string, libraryId: string, __v: number });
+        delete resDoc.__v;
+        delete resDoc._id;
+        delete resDoc.password;
         bcrypt.compare(req.body.password, doc.toJSON().password)
         .then((same) => {
           if (same) {
             const token = doc.toJSON().token;
             res.status(200).send({
               status: 'Success',
-              token,
+              userInfo: resDoc,
             });
           } else {
             res.status(401).send({
               error: 'Incorrect password',
-              type: 'password',
+              field: 'password',
             })
           }
         })
@@ -30,7 +34,7 @@ export default (req: Request, res: Response) => {
       } else {
         res.status(403).send({
           error: 'Incorrect username',
-          type: 'username',
+          field: 'username',
         });
       }
     })

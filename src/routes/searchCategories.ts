@@ -1,11 +1,11 @@
 import { Response, Request } from 'express';
 import models from '../models/index';
 
-const Book = models.Book;
+const Category = models.Category;
 
 export default (req: Request, res: Response) => {
   if (req.query.q) {
-    Book.find({ $text: { $search: req.query.q } })
+    Category.find({ $text: { $search: req.query.q } })
     .then((docs) => {
       res.status(200).send(docs);
     })
@@ -13,12 +13,8 @@ export default (req: Request, res: Response) => {
       res.status(500).send(err);
     });
   } else {
-    Book.find().limit(10)
-    .then((docs) => {
-      res.status(200).send(docs);
-    })
-    .catch((err) => {
-      res.status(500).send(err);
+    res.status(400).send({
+      error: 'Missing \'q\' param',
     });
   }
 }

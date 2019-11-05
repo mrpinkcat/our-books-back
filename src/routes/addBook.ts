@@ -1,6 +1,6 @@
 import { Response, Request } from 'express';
 
-import { getBookInfo } from './../utils';
+import { getBookInfo, addAuthorBook } from './../utils';
 
 import models from '../models/index';
 const Book = models.Book;
@@ -11,7 +11,7 @@ const Book = models.Book;
 export default (req: Request, res: Response) => {
   console.log(`Add Book: ${req.params.isbn}`);
   // Si il y a les argument 'numberOfBooks' et 'librariesIds'
-  if (req.body.numberOfBooks && req.body.librariesIds) {
+  if (req.body.numberOfBooks && req.body.librariesIds && req.body.category) {
     // Si la longueur de l'array 'librariesIds' est égale au nombre de livres
     if (req.body.librariesIds.length === req.body.numberOfBooks) {
       // Si 'numberOfBooks' est compris entre 1 et 100
@@ -20,15 +20,15 @@ export default (req: Request, res: Response) => {
 
         console.log(`${req.body.numberOfBooks} books ISBN:${req.params.isbn} in ${req.body.librariesIds}`);
   
-        let books: { name: string, authors: string[], publisher: string, publicationDate: Date, coverUrl: string, isbn: string, pages: number, borrowUsernames: undefined, libraryId: string}[] = [];
+        let books: { name: string, author: string, publisher: string, publicationDate: Date, coverUrl: string, isbn: string, pages: number, borrowUsernames: undefined, libraryId: string}[] = [];
 
-        let bookInfo: {name: string, authors: string[], publisher: string, publicationDate: Date, coverUrl: string, isbn: string, pages: number };
+        let bookInfo: {name: string, author: string, publisher: string, publicationDate: Date, coverUrl: string, isbn: string, pages: number };
 
         getBookInfo(req.params.isbn)
         .then((book) => {
           bookInfo = {
             name: book.name,
-            authors: book.authors,
+            author: book.author,
             publisher: book.publisher,
             publicationDate: book.publicationDate,
             coverUrl: book.coverUrl,
@@ -39,7 +39,7 @@ export default (req: Request, res: Response) => {
           body.librariesIds.forEach((libraryId, index) => {
             books.push({
               name: bookInfo.name,
-              authors: bookInfo.authors,
+              author: bookInfo.author,
               publisher: bookInfo.publisher,
               publicationDate: bookInfo.publicationDate,
               coverUrl: bookInfo.coverUrl,
@@ -49,12 +49,18 @@ export default (req: Request, res: Response) => {
               libraryId,
             });
             if (index + 1 === body.librariesIds.length) {
+              // Insertion des livres dans la base
               Book.insertMany(books)
-              .then((docs) => {
-                res.status(200).send({
-                  status: 'Created',
-                  docs,
-                });
+              .then((bookDocs) => {
+                // Insertion de l'auteur
+                addAuthorBook(book.author, req.params.isbn)
+                .then((authorDoc) => {
+                  // Réponse si tout ces bien passé
+                  res.status(200).send({
+                    status: 'Created',
+                    bookDocs,
+                  });
+                })
               })
               .catch((err) => {
                 res.status(500).send({
@@ -68,15 +74,15 @@ export default (req: Request, res: Response) => {
         .catch((err) => {
           if (err === 404) {
             res.status(404).send({
-              error: 'Book not found in Open Library databases',
+              error: 'Google Boooks retrun an error',
               err,
             });
           } else {
             res.status(500).send({
-              error: 'Open Library Org is unavailable',
+              error: 'Google Boooks retrun an error',
               err,
             });
-          } 
+          }
         });
       } else {
         res.status(400).send({
@@ -85,8 +91,12 @@ export default (req: Request, res: Response) => {
       }
     } else {
       res.status(400).send({
-        error: '\'librariesIds\' array length and \'numberOfBooks\' must be equal.',
+        error: '\'librariesIds\' array length and \'numberOfBooks\' must be equal',
       });
     }
+  } else {
+    res.status(400).send({
+      error: 'Body must contain \'librariesIds\', \'numberOfBooks\' and \‘category\'',
+    });
   }
 }

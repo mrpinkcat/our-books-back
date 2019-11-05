@@ -1,4 +1,5 @@
 import { model, Schema } from 'mongoose';
+import { ObjectID } from 'bson';
 
 const schema = new Schema({
   username: {
@@ -31,6 +32,9 @@ const schema = new Schema({
     type: String,
     required: false,
     default: 'user',
+  },
+  libraryId: {
+    type: ObjectID,
   }
 });
 
