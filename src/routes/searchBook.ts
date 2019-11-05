@@ -24,10 +24,10 @@ export default (req: Request, res: Response) => {
       }
     })
     .catch((err) => {
-
+      res.status(500).send(err);
     })
   } else {
-    Book.find().limit(50)
+    Book.find().limit(200)
     .then((docs) => {
       res.status(200).send(docs);
     })
