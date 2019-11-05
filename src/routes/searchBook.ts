@@ -12,8 +12,22 @@ export default (req: Request, res: Response) => {
     .catch((err) => {
       res.status(500).send(err);
     });
+  } else if (req.query.isbn) {
+    Book.find({ isbn: req.query.isbn })
+    .then((docs) => {
+      if (docs.length !== 0) {
+        res.status(200).send(docs);
+      } else {
+        res.status(404).send({
+          error: `No books for isbn ${req.query.isbn}`,
+        });
+      }
+    })
+    .catch((err) => {
+
+    })
   } else {
-    Book.find().limit(10)
+    Book.find().limit(50)
     .then((docs) => {
       res.status(200).send(docs);
     })
