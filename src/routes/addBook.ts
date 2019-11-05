@@ -20,9 +20,9 @@ export default (req: Request, res: Response) => {
 
         console.log(`${req.body.numberOfBooks} books ISBN:${req.params.isbn} in ${req.body.librariesIds}`);
   
-        let books: { name: string, author: string, publisher: string, publicationDate: Date, coverUrl: string, isbn: string, pages: number, borrowUsernames: undefined, libraryId: string}[] = [];
+        let books: { name: string, author: string, publisher: string, publicationDate: Date, coverUrl: string, isbn: string, pages: number, description: string, borrowUsernames: undefined, libraryId: string}[] = [];
 
-        let bookInfo: {name: string, author: string, publisher: string, publicationDate: Date, coverUrl: string, isbn: string, pages: number };
+        let bookInfo: {name: string, author: string, publisher: string, publicationDate: Date, coverUrl: string, isbn: string, pages: number, description: string };
 
         getBookInfo(req.params.isbn)
         .then((book) => {
@@ -34,6 +34,7 @@ export default (req: Request, res: Response) => {
             coverUrl: book.coverUrl,
             isbn: req.params.isbn,
             pages: book.pages,
+            description: book.description,
           }
 
           body.librariesIds.forEach((libraryId, index) => {
@@ -47,6 +48,7 @@ export default (req: Request, res: Response) => {
               pages: bookInfo.pages,
               borrowUsernames: undefined,
               libraryId,
+              description: bookInfo.description,
             });
             if (index + 1 === body.librariesIds.length) {
               // Insertion des livres dans la base

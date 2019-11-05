@@ -25,6 +25,10 @@ const schema = new Schema({
     type: Number,
     min: 1,
   },
+  description: {
+    type: String,
+    required: false,
+  },
   borrowUsername: {
     type: String,
     required: false,
