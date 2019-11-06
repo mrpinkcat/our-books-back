@@ -12,7 +12,7 @@ export default (req: Request, res: Response) => {
     const body: { name: string, address: { street: string, city: string, zipCode: number, country: string, state?: string } } = req.body;
 
     // Récupération des coordonées de la bibliothèque
-    Axios.get(`https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyCA6cZhpWh63hzSQzWMpXn75f9KdM9EYKE`, {
+    Axios.get(`https://maps.googleapis.com/maps/api/geocode/json`, {
       params: {
         address: `${body.address.street}, ${body.address.zipCode}, ${body.address.city}, ${body.address.country}`,
         key: env.geocode,
