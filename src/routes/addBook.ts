@@ -20,7 +20,7 @@ export default (req: Request, res: Response) => {
 
         console.log(`${req.body.numberOfBooks} books ISBN:${req.params.isbn} in ${req.body.librariesIds}`);
   
-        let books: { name: string, author: string, publisher: string, publicationDate: Date, coverUrl: string, isbn: string, pages: number, description: string, borrowUsernames: undefined, libraryId: string}[] = [];
+        let books: { name: string, author: string, publisher: string, publicationDate: Date, coverUrl: string, isbn: string, pages: number, description: string, borrowUsername: string | undefined, libraryId: string}[] = [];
 
         let bookInfo: {name: string, author: string, publisher: string, publicationDate: Date, coverUrl: string, isbn: string, pages: number, description: string };
 
@@ -46,7 +46,7 @@ export default (req: Request, res: Response) => {
               coverUrl: bookInfo.coverUrl,
               isbn: bookInfo.isbn,
               pages: bookInfo.pages,
-              borrowUsernames: undefined,
+              borrowUsername: undefined,
               libraryId,
               description: bookInfo.description,
             });
