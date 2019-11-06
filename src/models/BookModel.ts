@@ -38,7 +38,6 @@ const schema = new Schema({
   }
 });
 
-// db.books.createIndex( { name: "text" }, { default_language: "french" } )
-// Création de l'index pour la recherche de titre
+schema.index({ name: "text" }, { default_language: "french" });
 
 export default model('Book', schema);
