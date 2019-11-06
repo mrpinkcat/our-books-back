@@ -44,6 +44,9 @@ app.get('/libraries', routes.library);
 // Route pour emprunter un livre
 app.post('/borrow', needAuth, routes.borrow);
 
+// Route pour rendre un livre
+app.post('/return', needAdminRank, routes.retrunBook);
+
 // Route pour chercher les categories
 app.get('/categories', routes.searchCategorie);
 

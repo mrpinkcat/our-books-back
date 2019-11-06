@@ -17,5 +17,6 @@ export default (req: Request, res: Response) => {
   })
   .catch((err) => {
     res.status(500).send(err);
+    console.log(err);
   });
 }

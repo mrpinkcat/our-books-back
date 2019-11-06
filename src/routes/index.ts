@@ -5,6 +5,7 @@ import searchBook from './searchBook';
 import addLibrary from './addLibrary';
 import library from './library';
 import borrow from './borrow';
+import retrunBook from './retrunBook';
 import deleteBook from './deleteBook';
 import checkAuth from './checkAuth';
 import searchCategorie from './searchCategories';
@@ -18,6 +19,7 @@ export default {
   addLibrary,
   library,
   borrow,
+  retrunBook,
   deleteBook,
   checkAuth,
   searchCategorie,
