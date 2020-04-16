@@ -5,6 +5,8 @@ import { needAdminRank, needAuth, addAuthorBook } from './utils';
 import routes from './routes';
 import config from './env';
 import cors from 'cors';
+import https from 'https';
+import fs from 'fs';
 
 const app = express();
 app.use(bodyParser.json());
@@ -61,9 +63,33 @@ console.log('Connection to mongodb...');
 mongoose.connect(config.mongo.uri, { useNewUrlParser: true, useCreateIndex: true })
 .then(() => {
   console.log('Connected to mongodb.');
-  app.listen(process.env.PORT, () => {
-    console.log(`App started on :${process.env.PORT}`);
-  });
+  if (process.env.HTTPS) {
+    console.log('Checking tls files ...');
+
+    if (!fs.existsSync('key.pem')) {
+      console.error(`Key not found key.pem`);
+      process.exit(1);
+    }
+    if (!fs.existsSync('certchain.pem')) {
+      console.error(`Certificate not found certchain.pem`);
+      process.exit(1);
+    }
+
+    console.log('tls files OK');
+
+    const privateKey  = fs.readFileSync('key.pem', 'utf8');
+    const certificate = fs.readFileSync('certchain.pem', 'utf8');
+
+    const credentials = {key: privateKey, cert: certificate};
+
+    https.createServer(credentials, app).listen(process.env.PORT, () => {
+      console.log(`App started on :${process.env.PORT} with HTTPS`);
+    });
+  } else {
+    app.listen(process.env.PORT, () => {
+      console.log(`App started on :${process.env.PORT} without HTTPS`);
+    });
+  }
 })
 .catch((err) => {
   console.log('Connection to mongodb fail !');
