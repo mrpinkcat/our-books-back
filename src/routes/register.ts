@@ -14,7 +14,9 @@ export default (req: Request, res: Response) => {
     // Si la requete contient le rank admin
     if (req.body.rank === 'admin') {
       if (req.query.token) {
+        // @ts-ignore
         checkTokenAdmin(req.query.token)
+        // @ts-ignore
         .then((admin) => {
           if (admin) {
             bcrypt.hash(req.body.password, config.bcrypt.saltRounds)
@@ -50,6 +52,7 @@ export default (req: Request, res: Response) => {
             });
           }
         })
+        // @ts-ignore
         .catch((err) => {
           res.status(500).send({
             error: err,
