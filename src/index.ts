@@ -4,9 +4,11 @@ import mongoose from 'mongoose';
 import { needAdminRank, needAuth, addAuthorBook } from './utils';
 import routes from './routes';
 import config from './env';
+import cors from 'cors';
 
 const app = express();
 app.use(bodyParser.json());
+app.use(cors({ origin: '*' }));
 
 // Créer un token temporaire avec une expiration de 3 jours, à chaque
 // fois qu'il y a une requette, renvoyer le token dedans. Quand ce token
