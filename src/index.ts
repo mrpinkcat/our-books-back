@@ -55,7 +55,7 @@ app.post('/return', needAdminRank, routes.retrunBook);
 app.get('/categories', routes.searchCategorie);
 
 // Route pour changer la bibiliothèque d'un utlisateur
-app.post('/user/library', needAuth, routes.changeUserLibrary);
+app.put('/user/library', needAuth, routes.changeUserLibrary);
 
 // IDEA : /ask/:isbn # For ask to add a book
 
