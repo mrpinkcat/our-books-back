@@ -63,7 +63,7 @@ console.log('Connection to mongodb...');
 mongoose.connect(config.mongo.uri, { useNewUrlParser: true, useCreateIndex: true })
 .then(() => {
   console.log('Connected to mongodb.');
-  if (process.env.HTTPS) {
+  if (process.env.HTTPS === 'true') {
     console.log('Checking tls files ...');
 
     if (!fs.existsSync('key.pem')) {
